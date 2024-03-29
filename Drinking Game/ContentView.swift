@@ -15,8 +15,12 @@ struct ContentView: View {
             return Int.random(in: 0..<size*size)
         }
     
-    func buttonPressed() {
-        print("button pressed")
+    func buttonPressed(loss: Bool) {
+        if (loss) {
+            print("Du hast verloren")
+        } else {
+            print("Glück gehabt, weiter gehts")
+        }
     }
     
     var body: some View {
@@ -24,7 +28,7 @@ struct ContentView: View {
                    Color(.black)
                        .ignoresSafeArea()
                    VStack {
-                       Text("Pick a beer mug")
+                       Text("Wähle eine Maß Bier")
                            .font(.title)
                            .foregroundStyle(.white)
                        let randomNumber = randomIndex
@@ -32,8 +36,9 @@ struct ContentView: View {
                            HStack {
                                ForEach(0..<size,  id: \.self) { column in
                                    let index = row * size + column
-                                   Button(action: { buttonPressed() }) {
-                                       if (index == randomNumber) {
+                                   let pick = index == randomNumber
+                                   Button(action: { buttonPressed(loss:pick) }) {
+                                       if (pick) {
                                            Image("transparent_2024-03-29T13-30-07")
                                                .resizable()
                                                .frame(width: 120, height: 120)
