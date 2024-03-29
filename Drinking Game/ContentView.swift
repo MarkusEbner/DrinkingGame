@@ -10,16 +10,26 @@ import SwiftUI
 struct ContentView: View {
     
     let size = 3
+        
+    @State private var randomNumber: Int = 0
+    
+    @State private var clickedArray: [Bool]
+    
+    init() {
+        _randomNumber = State(initialValue: Int.random(in: 0..<size*size))
+        _clickedArray = State(initialValue: [Bool](repeating: false, count: size*size))
+    }
     
     var randomIndex: Int {
             return Int.random(in: 0..<size*size)
         }
     
-    func buttonPressed(loss: Bool) {
+    func buttonPressed(loss: Bool, index: Int) {
         if (loss) {
             print("Du hast verloren")
         } else {
             print("Glück gehabt, weiter gehts")
+            clickedArray[index] = true
         }
     }
     
@@ -31,22 +41,26 @@ struct ContentView: View {
                        Text("Wähle eine Maß Bier")
                            .font(.title)
                            .foregroundStyle(.white)
-                       let randomNumber = randomIndex
                        ForEach(0..<size, id: \.self) { row in
                            HStack {
                                ForEach(0..<size,  id: \.self) { column in
                                    let index = row * size + column
                                    let pick = index == randomNumber
-                                   Button(action: { buttonPressed(loss:pick) }) {
-                                       if (pick) {
-                                           Image("transparent_2024-03-29T13-30-07")
-                                               .resizable()
+                                   Button(action: { buttonPressed(loss:pick, index: index) }) {
+                                       if (clickedArray[index]) {
+                                           Color.clear
                                                .frame(width: 120, height: 120)
-                                               .colorInvert()
                                        } else {
-                                           Image("transparent_2024-03-29T13-30-07")
-                                               .resizable()
-                                               .frame(width: 120, height: 120)
+                                           if (pick) {
+                                               Image("transparent_2024-03-29T13-30-07")
+                                                   .resizable()
+                                                   .frame(width: 120, height: 120)
+                                                   .colorInvert()
+                                           } else {
+                                               Image("transparent_2024-03-29T13-30-07")
+                                                   .resizable()
+                                                   .frame(width: 120, height: 120)
+                                           }
                                        }
                                    }
                                    .foregroundColor(.white) // Button text color
