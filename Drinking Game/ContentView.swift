@@ -22,10 +22,7 @@ struct ContentView: View {
         _randomNumber = State(initialValue: Int.random(in: 0..<size*size))
         _clickedArray = State(initialValue: [Bool](repeating: false, count: size*size))
     }
-    
-    var randomIndex: Int {
-            return Int.random(in: 0..<size*size)
-        }
+
     
     func buttonPressed(loss: Bool, index: Int) {
         if (loss) {
@@ -35,6 +32,12 @@ struct ContentView: View {
             print("Glück gehabt, weiter gehts")
             clickedArray[index] = true
         }
+    }
+    
+    func restartGame() {
+        showAlert = false
+        clickedArray = [Bool](repeating: false, count: size*size)
+        randomNumber = Int.random(in: 0..<size*size)
     }
     
     var body: some View {
@@ -76,7 +79,9 @@ struct ContentView: View {
                    .alert(isPresented: $showAlert) {
                        Alert(title: Text("Game Over Junge"),
                              message: Text("Du hast verloren"),
-                             dismissButton: .default(Text("Restart")))
+                             dismissButton: .default(Text("Restart"), action: {
+                           restartGame()
+                       }))
                    }
                }
            }
