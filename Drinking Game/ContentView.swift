@@ -11,8 +11,6 @@ struct ContentView: View {
     
     let size = 3
     
-    @State private var counter = 0
-    
     var randomIndex: Int {
             return Int.random(in: 0..<size*size)
         }
@@ -33,15 +31,17 @@ struct ContentView: View {
                        ForEach(0..<size, id: \.self) { row in
                            HStack {
                                ForEach(0..<size,  id: \.self) { column in
+                                   let index = row * size + column
                                    Button(action: { buttonPressed() }) {
-                                       if (counter == randomNumber) {
+                                       if (index == randomNumber) {
                                            Image("transparent_2024-03-29T13-30-07")
                                                .resizable()
-                                               .frame(width: 60, height: 60) // Adjust size as needed
+                                               .frame(width: 120, height: 120)
+                                               .colorInvert()
                                        } else {
                                            Image("transparent_2024-03-29T13-30-07")
                                                .resizable()
-                                               .frame(width: 120, height: 120) // Adjust size as needed
+                                               .frame(width: 120, height: 120)
                                        }
                                    }
                                    .foregroundColor(.white) // Button text color
