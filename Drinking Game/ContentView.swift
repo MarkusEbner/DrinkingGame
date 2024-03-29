@@ -58,16 +58,9 @@ struct ContentView: View {
                                            Color.clear
                                                .frame(width: 120, height: 120)
                                        } else {
-                                           if (pick) {
                                                Image("transparent_2024-03-29T13-30-07")
                                                    .resizable()
                                                    .frame(width: 120, height: 120)
-                                                   .colorInvert()
-                                           } else {
-                                               Image("transparent_2024-03-29T13-30-07")
-                                                   .resizable()
-                                                   .frame(width: 120, height: 120)
-                                           }
                                        }
                                    }
                                    .foregroundColor(.white) // Button text color
