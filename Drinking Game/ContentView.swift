@@ -15,6 +15,9 @@ struct ContentView: View {
     
     @State private var clickedArray: [Bool]
     
+    @State private var showAlert = false
+
+    
     init() {
         _randomNumber = State(initialValue: Int.random(in: 0..<size*size))
         _clickedArray = State(initialValue: [Bool](repeating: false, count: size*size))
@@ -27,6 +30,7 @@ struct ContentView: View {
     func buttonPressed(loss: Bool, index: Int) {
         if (loss) {
             print("Du hast verloren")
+            showAlert = true
         } else {
             print("Glück gehabt, weiter gehts")
             clickedArray[index] = true
@@ -69,6 +73,11 @@ struct ContentView: View {
                        }
                    }
                    .padding()
+                   .alert(isPresented: $showAlert) {
+                       Alert(title: Text("Game Over Junge"),
+                             message: Text("Du hast verloren"),
+                             dismissButton: .default(Text("Restart")))
+                   }
                }
            }
 }
